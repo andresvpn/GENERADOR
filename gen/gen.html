@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <title>Generador de HTML</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #1a1a1a;
+            color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .input-container {
+            background: linear-gradient(145deg, #2c2c2c, #1e1e1e);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 10px 10px 20px #121212, -10px -10px 20px #2e2e2e;
+            width: 350px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .input-container label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        .input-container input, .input-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 10px;
+            border: none;
+            box-shadow: inset 5px 5px 10px #141414, inset -5px -5px 10px #282828;
+            background-color: #2b2b2b;
+            color: #f4f4f4;
+            box-sizing: border-box;
+        }
+        .input-container button {
+            margin-top: 15px;
+            padding: 12px;
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 5px 5px 10px #141414, -5px -5px 10px #2e2e2e;
+        }
+        .input-container button:hover {
+            background-color: #218838;
+        }
+        #generated-html, #message {
+            background: linear-gradient(145deg, #2c2c2c, #1e1e1e);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 10px 10px 20px #121212, -10px -10px 20px #2e2e2e;
+            white-space: pre-wrap;
+            max-width: 90%;
+            overflow-x: auto;
+            margin-top: 20px;
+            color: #f4f4f4;
+        }
+        #movie-panel {
+            display: none;
+            position: absolute;
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 100px;
+            background: #1e1e1e;
+            border-radius: 20px;
+            box-shadow: 10px 10px 20px #121212, -10px -10px 20px #2e2e2e;
+            padding: 10px;
+            text-align: center;
+        }
+        #movie-panel img {
+            max-height: 80px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="input-container">
+        <div id="movie-panel">
+            <img src="" id="movie-image" alt="Movie Image">
+        </div>
+        <label for="id-input">ID de la Película:</label>
+        <input type="text" id="id-input" placeholder="ID de la película">
+        <label for="quality-input">Calidad:</label>
+        <input type="text" id="quality-input" placeholder="Calidad de la película">
+        <label for="iframe-url-input">URL de iFrame:</label>
+        <input type="text" id="iframe-url-input" placeholder="URL del iFrame">
+        <button onclick="generateHTML()">Generar HTML</button>
+        <button onclick="copyToClipboard()">Copiar Código</button>
+    </div>
+
+    <div id="generated-html"></div>
+    <div id="message"></div>
+
+    <script src="gen.js"></script>
+</body>
+</html>
