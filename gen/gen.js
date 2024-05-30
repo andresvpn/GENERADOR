@@ -13,7 +13,13 @@ async function generateHTML() {
             const title = datos.title;
             const synopsis = datos.overview;
             const imageUrl = `https://image.tmdb.org/t/p/original/${datos.backdrop_path}`;
+            const posterUrl = `https://image.tmdb.org/t/p/w500/${datos.poster_path}`;
             const duration = convertMinutes(datos.runtime);
+
+            // Update the poster panel
+            document.getElementById('movie-panel').style.display = 'block';
+            document.getElementById('movie-image').src = posterUrl;
+            document.getElementById('movie-image').alt = title;
 
             const generatedHTML = `
 <!DOCTYPE html>
@@ -32,12 +38,6 @@ async function generateHTML() {
 </head>
 <body>
     <!-- Header -->
-    <main>
-        <div class="content-all">
-            <header></header>
-            <label>Película</label>
-        </div>
-    </main>
 
     <!-- Banner -->
     <div class="banner" id="banner">
@@ -76,6 +76,8 @@ async function generateHTML() {
             `;
 
             document.getElementById('generated-html').textContent = generatedHTML;
+            // Save the poster URL to a data attribute for copying
+            document.getElementById('movie-image').dataset.posterUrl = posterUrl;
         } else {
             console.error('Error:', respuesta.status, respuesta.statusText);
         }
@@ -87,13 +89,34 @@ async function generateHTML() {
 function copyToClipboard() {
     const generatedHTML = document.getElementById('generated-html').textContent;
     navigator.clipboard.writeText(generatedHTML).then(() => {
-        document.getElementById('message').textContent = 'Código copiado al portapapeles';
-        document.getElementById('message').style.color = 'green';
+        // Show success message
+        showMessageModal('Código copiado al portapapeles');
     }).catch(err => {
-        document.getElementById('message').textContent = 'Error al copiar el código';
-        document.getElementById('message').style.color = 'red';
         console.error('Error al copiar el código: ', err);
     });
+}
+
+function copyPosterURL() {
+    const posterUrl = document.getElementById('movie-image').dataset.posterUrl;
+    if (posterUrl) {
+        navigator.clipboard.writeText(posterUrl).then(() => {
+            // Show success message
+            showMessageModal('URL del póster copiada al portapapeles');
+        }).catch(err => {
+            console.error('Error al copiar la URL del póster: ', err);
+        });
+    } else {
+        console.error('No hay URL del póster disponible');
+    }
+}
+
+function showMessageModal(message) {
+    const modal = document.getElementById('message-modal');
+    modal.textContent = message;
+    modal.classList.add('show');
+    setTimeout(() => {
+        modal.classList.remove('show');
+    }, 2000); // Hide after 2 seconds
 }
 
 function convertMinutes(minutes) {

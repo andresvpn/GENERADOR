@@ -13,8 +13,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
             flex-direction: column;
         }
         .input-container {
@@ -22,9 +24,10 @@
             padding: 20px;
             border-radius: 20px;
             box-shadow: 10px 10px 20px #121212, -10px -10px 20px #2e2e2e;
-            width: 350px;
+            width: 100%;
+            max-width: 400px;
             margin-bottom: 20px;
-            position: relative;
+            box-sizing: border-box;
         }
         .input-container label {
             font-weight: bold;
@@ -57,7 +60,7 @@
         .input-container button:hover {
             background-color: #218838;
         }
-        #generated-html, #message {
+        #generated-html {
             background: linear-gradient(145deg, #2c2c2c, #1e1e1e);
             padding: 20px;
             border-radius: 20px;
@@ -67,32 +70,49 @@
             overflow-x: auto;
             margin-top: 20px;
             color: #f4f4f4;
+            box-sizing: border-box;
         }
         #movie-panel {
             display: none;
-            position: absolute;
-            top: -120px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 300px;
-            height: 100px;
+            width: 100%;
+            max-width: 300px;
+            height: auto;
             background: #1e1e1e;
             border-radius: 20px;
             box-shadow: 10px 10px 20px #121212, -10px -10px 20px #2e2e2e;
             padding: 10px;
             text-align: center;
+            margin-top: 20px;
+            box-sizing: border-box;
         }
         #movie-panel img {
-            max-height: 80px;
+            max-height: 100%;
+            max-width: 100%;
             border-radius: 10px;
+        }
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #2c2c2c;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 10px 10px 20px #121212, -10px -10px 20px #2e2e2e;
+            text-align: center;
+            color: #f4f4f4;
+            box-sizing: border-box;
+        }
+        .modal.show {
+            display: block;
         }
     </style>
 </head>
 <body>
     <div class="input-container">
-        <div id="movie-panel">
-            <img src="" id="movie-image" alt="Movie Image">
-        </div>
         <label for="id-input">ID de la Película:</label>
         <input type="text" id="id-input" placeholder="ID de la película">
         <label for="quality-input">Calidad:</label>
@@ -101,10 +121,17 @@
         <input type="text" id="iframe-url-input" placeholder="URL del iFrame">
         <button onclick="generateHTML()">Generar HTML</button>
         <button onclick="copyToClipboard()">Copiar Código</button>
+        <button onclick="copyPosterURL()">Copiar URL del Póster</button>
+    </div>
+
+    <div id="movie-panel">
+        <img src="" id="movie-image" alt="Movie Image">
     </div>
 
     <div id="generated-html"></div>
-    <div id="message"></div>
+    
+    <!-- Modal for success message -->
+    <div id="message-modal" class="modal"></div>
 
     <script src="gen.js"></script>
 </body>
