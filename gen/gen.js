@@ -76,8 +76,9 @@ async function generateHTML() {
             `;
 
             document.getElementById('generated-html').textContent = generatedHTML;
-            // Save the poster URL to a data attribute for copying
+            // Save the poster and background URLs to data attributes for copying
             document.getElementById('movie-image').dataset.posterUrl = posterUrl;
+            document.getElementById('movie-image').dataset.backgroundUrl = imageUrl;
         } else {
             console.error('Error:', respuesta.status, respuesta.statusText);
         }
@@ -107,6 +108,20 @@ function copyPosterURL() {
         });
     } else {
         console.error('No hay URL del póster disponible');
+    }
+}
+
+function copyFondo() {
+    const imageUrl = document.getElementById('movie-image').dataset.backgroundUrl;
+    if (imageUrl) {
+        navigator.clipboard.writeText(imageUrl).then(() => {
+            // Show success message
+            showMessageModal('URL del fondo copiada al portapapeles');
+        }).catch(err => {
+            console.error('Error al copiar la URL del fondo: ', err);
+        });
+    } else {
+        console.error('No hay URL del fondo disponible');
     }
 }
 
